@@ -1,19 +1,52 @@
 const TYPE_LABEL = {
   speech: "Speech",
-  social: "Social Post",
-  release: "Press Release"
+  release: "Press Release",
+  facebook: "Facebook Post",
+  other: "Other"
 };
 
 const listEl = document.getElementById("file-list");
 const countEl = document.getElementById("count-readout");
 const searchEl = document.getElementById("search-input");
 const tabButtons = Array.from(document.querySelectorAll(".filter-tab"));
+const tagRowEl = document.getElementById("tag-filter-row");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalContent = document.getElementById("modal-content");
 const closeBtn = document.getElementById("modal-close");
 
 let activeType = "all";
+let selectedTags = new Set();
 let query = "";
+
+function buildTagFilterUI() {
+  const allTags = Array.from(new Set(ARCHIVE_ENTRIES.flatMap(e => e.tags))).sort();
+
+  tagRowEl.innerHTML = allTags.map(tag => `
+    <button class="tag-filter-chip" data-tag="${escapeHtml(tag)}" aria-pressed="false">${escapeHtml(tag)}</button>
+  `).join("") + `<button class="tag-filter-clear" id="tag-clear" hidden>Clear tags</button>`;
+
+  tagRowEl.querySelectorAll(".tag-filter-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const tag = chip.dataset.tag;
+      if (selectedTags.has(tag)) {
+        selectedTags.delete(tag);
+        chip.setAttribute("aria-pressed", "false");
+      } else {
+        selectedTags.add(tag);
+        chip.setAttribute("aria-pressed", "true");
+      }
+      document.getElementById("tag-clear").hidden = selectedTags.size === 0;
+      render();
+    });
+  });
+
+  document.getElementById("tag-clear").addEventListener("click", () => {
+    selectedTags.clear();
+    tagRowEl.querySelectorAll(".tag-filter-chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+    document.getElementById("tag-clear").hidden = true;
+    render();
+  });
+}
 
 function formatDate(iso) {
   const d = new Date(iso + "T00:00:00");
@@ -23,6 +56,12 @@ function formatDate(iso) {
 function matches(entry) {
   const typeOk = activeType === "all" || entry.type === activeType;
   if (!typeOk) return false;
+
+  if (selectedTags.size > 0) {
+    const hasTag = entry.tags.some(t => selectedTags.has(t));
+    if (!hasTag) return false;
+  }
+
   if (!query) return true;
   const haystack = `${entry.title} ${entry.summary} ${entry.tags.join(" ")}`.toLowerCase();
   return haystack.includes(query.toLowerCase());
@@ -120,4 +159,5 @@ searchEl.addEventListener("input", (e) => {
   render();
 });
 
+buildTagFilterUI();
 render();

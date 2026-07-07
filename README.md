@@ -1,57 +1,59 @@
-# The Public Record — Digital Archive Template
+# Commissioner Neil Makhija — Public Archive
 
-A static, searchable archive site for speeches, social media posts, and press releases. No build step, no dependencies — just HTML, CSS, and JS.
+A static, searchable archive of speeches, press releases, and Facebook posts. No coding required to add new entries — you can do it all from github.com in your browser.
 
-## What's in here
-- `index.html` — page structure
-- `styles.css` — the "records office" visual design (manila paper, folder tabs, rubber-stamp accents)
-- `data.js` — **your content lives here.** Sample/placeholder entries are included so you can see the design working.
-- `script.js` — search, filtering, and the "case file" pop-up viewer
+## How to add a new entry (no git required)
 
-## 1. Replace the sample content
-Open `data.js` and edit the `ARCHIVE_ENTRIES` array. Each entry looks like:
+1. Go to your repository on github.com
+2. Click on the file **`data.js`**
+3. Click the **pencil icon** (top right of the file view) to edit it
+4. Find the `ARCHIVE_ENTRIES` list. Copy one existing entry (an entire `{ ... }` block, including the curly braces and the comma after it), and paste a new copy right above or below it
+5. Edit the fields in your new copy:
 
 ```js
 {
-  id: "unique-id-for-this-entry",
-  type: "speech",   // or "social" or "release"
-  title: "Title of the document",
-  date: "2024-05-01",
-  venue: "Where it was delivered / posted",
-  docNumber: "SPCH-001",   // any label you like, purely decorative
-  tags: ["tag1", "tag2"],
+  id: "2026-07-10-budget-speech",     // must be unique — just make up any short label
+  type: "speech",                      // one of: "speech", "release", "facebook", "other"
+  title: "Remarks on the 2027 Budget",
+  date: "2026-07-10",                  // YYYY-MM-DD
+  venue: "Norristown Courthouse",
+  docNumber: "SPCH-014",               // any label — purely for display
+  tags: ["budget", "affordability"],
   summary: "One sentence shown in the list view.",
   body: [
-    "First paragraph of the full text.",
+    "First paragraph of the real text.",
     "Second paragraph."
   ]
 }
 ```
 
-For `type: "social"`, `body` can just be a single string instead of an array.
-
-Delete the placeholder entries once you've added your real ones. Also update the site title/tagline in `index.html` (`<title>`, the `<h1>`, and the tagline paragraph) and the footer.
-
-## 2. Preview it locally
-No build tools needed. Just open `index.html` in a browser, or run a quick local server:
-
-```bash
-python3 -m http.server 8000
+For a Facebook post, `body` can just be one line of text instead of a list:
+```js
+body: "Great turnout at today's town hall in Lansdale!"
 ```
 
-Then visit `http://localhost:8000`.
+6. Scroll to the bottom, add a short commit message like "Add budget speech," and click **Commit changes directly to the main branch**
+7. Give it a minute — your live site will update automatically
 
-## 3. Publish on GitHub Pages
-1. Create a new repository on GitHub (or use an existing one).
-2. Push these files to the repo root (or to a `/docs` folder — your choice).
-3. In the repo, go to **Settings → Pages**.
-4. Under "Build and deployment," set **Source** to "Deploy from a branch."
-5. Choose your branch (e.g. `main`) and the folder (`/root` or `/docs`).
-6. Save. GitHub will give you a URL like `https://yourusername.github.io/your-repo-name/` within a minute or two.
+## Tags
 
-That's it — no build pipeline, no npm install. Any time you edit `data.js` and push, the live site updates automatically.
+Tags power the tag-filter chips at the top of the site. Reuse these spellings so entries group together correctly:
 
-## Notes
-- The search box filters on title, summary, and tags — not full document body text. If you want full-text search, that's a straightforward extension to `script.js`.
-- Entries are sorted newest-first automatically based on the `date` field.
-- Colors and fonts are all defined as CSS variables at the top of `styles.css` if you want to adjust the palette.
+**Policy areas:** `voting rights`, `elections`, `affordability`, `innovation & ai`, `public safety`, `human services`, `opioid crisis`, `behavioral health`, `infrastructure`, `criminal justice`, `budget`
+
+**Other:** `jokes`, `family stories`, `county announcement`
+
+You're not limited to this list — any tag you add to an entry will automatically show up as a filter chip on the site.
+
+## A note on accuracy
+
+The placeholder entries currently in `data.js` are **not real quotes** — they're bracketed stand-ins like `[Replace with the real text]`. Please make sure every entry you publish reflects the actual, verified text of the speech, release, or post before it goes live, since this is a public record of an elected official's statements.
+
+## Files
+- `index.html` — page structure
+- `styles.css` — visual design
+- `data.js` — **your content lives here**
+- `script.js` — search, filtering, and the case-file viewer
+
+## Publishing (if you haven't already)
+This repo is already set up for GitHub Pages if you followed the earlier setup steps: **Settings → Pages → Deploy from a branch → main → / (root) → Save**. Your site is live at whatever URL that screen shows you.

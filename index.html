@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Public Record — Digital Archive</title>
-<meta name="description" content="A searchable archive of speeches, social media posts, and press releases.">
+<title>Commissioner Neil Makhija — Public Archive</title>
+<meta name="description" content="A searchable archive of speeches, press releases, and Facebook posts from Montgomery County Commissioner Neil Makhija.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -13,11 +13,11 @@
 
 <header class="masthead">
   <div class="masthead-top">
-    <span>Est. 1984 — Ongoing</span>
+    <span>Montgomery County, PA</span>
     <span id="count-readout">— files</span>
   </div>
-  <h1>The Public <span class="accent">Record</span></h1>
-  <p class="tagline">A searchable archive of speeches, social media posts, and press releases. Every entry filed by date, type, and subject.</p>
+  <h1>Commissioner <span class="accent">Makhija</span> — Public Archive</h1>
+  <p class="tagline">A searchable record of speeches, press releases, and Facebook posts. Filter by type, policy area, or search directly.</p>
 </header>
 
 <div class="controls">
@@ -27,8 +27,13 @@
   <div class="filter-tabs" role="tablist" aria-label="Filter by document type">
     <button class="filter-tab tab-all" data-type="all" aria-pressed="true"><span class="dot"></span>All Files</button>
     <button class="filter-tab tab-speech" data-type="speech" aria-pressed="false"><span class="dot"></span>Speeches</button>
-    <button class="filter-tab tab-social" data-type="social" aria-pressed="false"><span class="dot"></span>Social Posts</button>
     <button class="filter-tab tab-release" data-type="release" aria-pressed="false"><span class="dot"></span>Press Releases</button>
+    <button class="filter-tab tab-facebook" data-type="facebook" aria-pressed="false"><span class="dot"></span>Facebook Posts</button>
+    <button class="filter-tab tab-other" data-type="other" aria-pressed="false"><span class="dot"></span>Other</button>
+  </div>
+  <div>
+    <p class="tag-filter-label">Filter by tag</p>
+    <div class="tag-filter-row" id="tag-filter-row"></div>
   </div>
 </div>
 
@@ -37,7 +42,7 @@
 </main>
 
 <footer class="site-footer">
-  Digital Archive — built as a static site. Replace sample entries in <code>data.js</code> with your own records.
+  Public Archive of Commissioner Neil Makhija — built as a static site. Add new entries in <code>data.js</code>.
 </footer>
 
 <div class="modal-overlay" id="modal-overlay">
